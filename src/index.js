@@ -34,9 +34,8 @@ module.exports = cors(router(
     return await db.findOne({_id: req.params.id})
   }),
   del('/:id', async (req, res) => {
-    const js = await json(req)
-    console.log(js)
-    return await db.remove({_id: req.params.id})
+    await db.remove({_id: req.params.id})
+    return {ok: true}
   }),
   get('/:id', async (req, res) => {
     return await db.findOne({_id: req.params.id})
