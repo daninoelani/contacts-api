@@ -3,6 +3,7 @@
 // }
 const { send, json } = require('micro')
 const { router, get, post, put, del } = require('microrouter')
+const cors = require('micro-cors')()
  
 const hello = (req, res) => send(res, 200, `Hello ${req.params.who}`)
  
@@ -15,7 +16,7 @@ const db = new Datastore({
 });
 
  
-module.exports = router(
+module.exports = cors(router(
   get('/hello/:who', hello), 
   post('/', async (req, res) => {
     const js = await json(req)
@@ -41,4 +42,4 @@ module.exports = router(
     return await db.findOne({_id: req.params.id})
   }),
   get('/*', notfound)
-  )
+  ))
